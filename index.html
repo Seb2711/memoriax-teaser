@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MemoriaX - La Révolution de la Mémoire Augmentée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1a1a2e, #16213e);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 50px;
+        }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .tagline {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+        .countdown {
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        .preinscription {
+            background-color: #e94560;
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .preinscription:hover {
+            background-color: #ff2e63;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MemoriaX</div>
+        <div class="tagline">La Révolution de la Mémoire Augmentée</div>
+        <div class="countdown">Lancement dans : <span id="countdown"></span></div>
+        <a href="#" class="preinscription">Préinscription Maintenant</a>
+    </div>
+
+    <script>
+        function countdownTimer() {
+            const launchDate = new Date("2025-06-01T00:00:00").getTime();
+            setInterval(function() {
+                let now = new Date().getTime();
+                let timeLeft = launchDate - now;
+                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+        countdownTimer();
+    </script>
+</body>
+</html>
+
+<!-- README.md -->
+<!-- # MemoriaX Teaser
+
+## 🚀 Présentation
+MemoriaX est une application révolutionnaire de mémoire augmentée. Ce site teaser permet de suivre le compte à rebours avant le lancement et de s'inscrire en avant-première.
+
+## 📌 Fonctionnalités
+- Compte à rebours en temps réel
+- Interface immersive et futuriste
+- Bouton de préinscription
+
+## 🔧 Déploiement
+1. **Forker ce projet sur GitHub**
+2. **Connecter à Netlify ou Vercel**
+3. **Déployer automatiquement** et obtenir un lien personnalisé
+
+🌟 Restez connectés pour l'évolution du projet ! -->
