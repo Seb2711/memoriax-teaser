@@ -31,4 +31,120 @@
             font-size: 2em;
             margin-bottom: 30px;
         }
-        .preinscription
+        .preinscription {
+            background-color: #e94560;
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .preinscription:hover {
+            background-color: #ff2e63;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            color: black;
+            width: 300px;
+        }
+        .close {
+            color: red;
+            font-size: 20px;
+            cursor: pointer;
+            float: right;
+        }
+        .close:hover {
+            color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">MemoriaX</div>
+        <div class="tagline">La Révolution de la Mémoire Augmentée</div>
+        <div class="countdown">Lancement dans : <span id="countdown"></span></div>
+        <button class="preinscription" onclick="openModal()">Préinscription Maintenant</button>
+    </div>
+    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Préinscription</h2>
+            <p>Inscrivez-vous pour être informé dès le lancement !</p>
+            <input type="email" id="email" placeholder="Votre email" required>
+            <button onclick="submitForm()">S'inscrire</button>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function countdownTimer() {
+            const launchDate = new Date("2025-06-01T00:00:00").getTime();
+            setInterval(function() {
+                let now = new Date().getTime();
+                let timeLeft = launchDate - now;
+                let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+        countdownTimer();
+
+        function openModal() {
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function submitForm() {
+            let email = document.getElementById("email").value;
+            if(email) {
+                database.ref('preinscriptions').push({
+                    email: email,
+                    timestamp: new Date().toISOString()
+                }).then(() => {
+                    alert("Merci pour votre préinscription ! Vous serez informé du lancement.");
+                    closeModal();
+                }).catch(error => {
+                    alert("Erreur lors de l'inscription : " + error.message);
+                });
+            } else {
+                alert("Veuillez entrer une adresse e-mail valide.");
+            }
+        }
+    </script>
+</body>
+</html>
